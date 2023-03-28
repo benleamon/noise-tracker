@@ -8,11 +8,37 @@
   </head>
   <body>
     <h1>Decibel tracker</h1>
+
+    <div id="settings">
+      <label for="">Low until:</label>
+      <input type="number" name="low-input" value="-30">
+      
+      <label for="">Medium until:</label>
+      <input type="number" name="medium-input" value="-18">
+      
+      <label for="">Duration for Average</label>
+      <input type="number" name="duration-input" value="60">
+
+      <label for="">Timer On</label>
+      <input type="checkbox" name="timer-toggle" checked = "TRUE">
+      <label for="">Timer (minutes):</label>
+      <input type="number" name="timer-input" value="">
+      
+      <label for="">Lives On</label>
+      <input type="checkbox" name="lives-toggle" checked = TRUE>
+      <label for="">Lives</label>
+      <input type="number" name="lives-input" value="5">
+    </div>
+
     <p>Current db:</p>
     <p id="db-label">0</p>
     <p>Average db:</p>
-    <p id="average-label"></p>
+    <p id="average-label">0</p>
+    
     <img id="level-image" src="image/0.png">
+    
+    <div id="lives"></div>
+
     <button id="start-button">Start</button>
     <button id="stop-button">Stop</button>
     <button id="export-button">Export</button>

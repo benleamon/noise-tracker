@@ -4,9 +4,16 @@ const data = [];
 // Set thresholds for sound levels
 const thresholds = {
   duration: 60,
-  low: -80.0,
-  medium: 7.0,
+  low: -30.0,
+  medium: -18.0,
+  lives:5,
+  minutes:0,
+  update: function() {
+    
+  }
 }
+
+thresholds.update()
 
 // set the reference sound pressure level or power level used for calibration (in dB SPL or dBm)
 const referenceLevel = 94; // example: 94 dB SPL
@@ -54,7 +61,10 @@ async function startAudioAnalysis() {
     logData(formattedDecibels);
 
     //Find average for the last n secods
-    averageSound(thresholds.duration);
+    const average = averageSound(thresholds.duration);
+
+    //Update average db label
+    updateAverageDb(average)
 
     // update the main picture based on sound levels
     setLevelImage(formattedDecibels);
@@ -70,6 +80,11 @@ function updateDb(rawdb){
   document.getElementById("db-label").innerHTML = rawdb;
 }
 
+// Update the text showing the current average decibel level on the web page
+function updateAverageDb(average){
+  document.getElementById("average-label").innerHTML = average;
+}
+
 // Save current decibel value to data
 function logData(rawdb){
   data.push(rawdb).toFixed(1);
@@ -77,8 +92,8 @@ function logData(rawdb){
 
 // Export the data to a new page
 function exportData(data){
-  var list = data;
-  var listContents ="";
+  let list = data;
+  let listContents ="";
   for (var i = 0; i < list.length; i++){
     listContents += list[i] + "\n";
   }
@@ -107,12 +122,13 @@ function resetData() {
 
 //Get the average sound for a duration
 function averageSound(duration){
-  numRecords = duration * 20;
-  relevantRecords = data.slice(-numRecords)
+  const numRecords = duration * 20;
+  let relevantRecords = data.slice(-numRecords)
   const formattedRecords = relevantRecords.map(Number)
   const sum = formattedRecords.reduce((accumulator, currentValue) => accumulator + currentValue);
   const average = sum / formattedRecords.length;
   console.log(average);
+  return average;
 }
 
 //Change level-image based on sound levels
