@@ -1,6 +1,13 @@
 // Create the data log
 const data = [];
 
+// Set thresholds for sound levels
+const thresholds = {
+  duration: 60,
+  low: -80.0,
+  medium: 7.0,
+}
+
 // set the reference sound pressure level or power level used for calibration (in dB SPL or dBm)
 const referenceLevel = 94; // example: 94 dB SPL
 
@@ -38,13 +45,19 @@ async function startAudioAnalysis() {
     let formattedDecibels = decibels.toFixed(1);
 
     // display the decibel level
-    console.log("Decibel level: " + formattedDecibels + " dB");
+    //console.log("Decibel level: " + formattedDecibels + " dB");
     
     //display raw data on the page 
     updateDb(formattedDecibels);
 
     // log the data 
     logData(formattedDecibels);
+
+    //Find average for the last n secods
+    averageSound(thresholds.duration);
+
+    // update the main picture based on sound levels
+    setLevelImage(formattedDecibels);
   };
 
   // connect the audio source to the script processor and start the audio stream
@@ -59,7 +72,7 @@ function updateDb(rawdb){
 
 // Save current decibel value to data
 function logData(rawdb){
-  data.push(rawdb);
+  data.push(rawdb).toFixed(1);
 }
 
 // Export the data to a new page
@@ -90,6 +103,27 @@ function stopAudioAnalysis() {
 function resetData() {
   data.length = 0;
   document.getElementById("db-label").innerHTML = "0"
+}
+
+//Get the average sound for a duration
+function averageSound(duration){
+  numRecords = duration * 20;
+  relevantRecords = data.slice(-numRecords)
+  const formattedRecords = relevantRecords.map(Number)
+  const sum = formattedRecords.reduce((accumulator, currentValue) => accumulator + currentValue);
+  const average = sum / formattedRecords.length;
+  console.log(average);
+}
+
+//Change level-image based on sound levels
+function setLevelImage(sound){
+  if (sound < thresholds.low){
+    document.getElementById("level-image").src = "image/1.png"
+  } else if ( sound < thresholds.medium) {
+    document.getElementById("level-image").src = "image/2.png"
+  } else if (sound > thresholds.medium) {
+    document.getElementById("level-image").src = "image/3.png"
+  }
 }
 
 //Buttons
