@@ -9,7 +9,7 @@ const thresholds = {
   lives:5,
   minutes:0,
   update: function(threshold, value) {
-    this[threshold] = value
+    this[threshold] = parseInt(value, 10)
   }
 }
 
@@ -93,7 +93,7 @@ async function startAudioAnalysis() {
     updateAverageDb(average)
 
     // update the main picture based on sound levels
-    setLevelImage(formattedDecibels);
+    setLevelImage(formattedDecibels, thresholds);
   };
 
   // connect the audio source to the script processor and start the audio stream
@@ -158,7 +158,17 @@ function averageSound(duration){
 }
 
 //Change level-image based on sound levels
-function setLevelImage(sound){
+// function setLevelImage(sound){
+//   if (sound < thresholds.low){
+//     document.getElementById("level-image").src = "image/1.png"
+//   } else if ( sound > thresholds.low && sound < thresholds.medium) {
+//     document.getElementById("level-image").src = "image/2.png"
+//   } else if (sound > thresholds.medium) {
+//     document.getElementById("level-image").src = "image/3.png"
+//   }
+// }
+
+function setLevelImage(sound, thresholds){
   if (sound < thresholds.low){
     document.getElementById("level-image").src = "image/1.png"
   } else if ( sound > thresholds.low && sound < thresholds.medium) {
@@ -167,7 +177,6 @@ function setLevelImage(sound){
     document.getElementById("level-image").src = "image/3.png"
   }
 }
-
 
 
 //Buttons
