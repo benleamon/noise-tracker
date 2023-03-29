@@ -8,12 +8,38 @@ const thresholds = {
   medium: -18.0,
   lives:5,
   minutes:0,
-  update: function() {
-    
+  update: function(threshold, value) {
+    this[threshold] = value
   }
 }
 
-thresholds.update()
+// Code to log all properties of an object
+function logObjectProperties(obj) {
+  for (let prop in obj) {
+    console.log(prop + ': ' + obj[prop]);
+  }
+}
+
+//Add event listeners to update the thresholds on user input
+// Get an array of all input elements
+const inputElements = Array.from(document.querySelectorAll("input"));
+// Add an event listener to each
+inputElements.forEach(input => {
+  input.addEventListener("input", event => {
+    // Get the name of the input
+    const inputName = event.target.name || event.target.id;
+
+    // Get the value of the new input
+    const newValue = event.target.value;
+
+    // Update the corresponding property in thresholds
+    thresholds.update(inputName, newValue);
+
+    logObjectProperties(thresholds)
+
+  });
+});
+
 
 // set the reference sound pressure level or power level used for calibration (in dB SPL or dBm)
 const referenceLevel = 94; // example: 94 dB SPL
@@ -135,12 +161,14 @@ function averageSound(duration){
 function setLevelImage(sound){
   if (sound < thresholds.low){
     document.getElementById("level-image").src = "image/1.png"
-  } else if ( sound < thresholds.medium) {
+  } else if ( sound > thresholds.low && sound < thresholds.medium) {
     document.getElementById("level-image").src = "image/2.png"
   } else if (sound > thresholds.medium) {
     document.getElementById("level-image").src = "image/3.png"
   }
 }
+
+
 
 //Buttons
 document.getElementById("export-button").addEventListener("click", function() {
