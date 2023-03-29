@@ -1,0 +1,70 @@
+.hidden{
+	display: none;
+}
+
+body{
+	margin: 0;
+	display: grid;
+	grid-template-columns: 1rem 1fr 1fr 1fr 1rem;
+}
+
+h1{
+	grid-column: 3;
+}
+
+#dashboard{
+	grid-column: 2;
+	grid-row:1;
+}
+
+#level-image{
+	grid-column: 3;
+	grid-row: 2;
+}
+
+#lives-container{
+	grid-column: 3;
+	grid-row: 3;
+}
+
+#controls{
+	grid-column: 3;
+	grid-row: 4;
+}
+
+#settings{
+	position: fixed;
+	grid-template-columns: 1rem 1fr 1fr 1rem;
+	top: 0;
+	right: 0;
+	height: 100%;
+	width: 33%;
+	z-index: 100;
+	background-color: grey;
+	display: grid;
+}
+
+#settings h2{
+	grid-column: 2;
+}
+
+#settings span{
+	grid-column: 3;
+	grid-row: 1;
+}
+
+#settings label {
+	grid-column: 2;
+}
+
+#settings input{
+	grid-column: 3;
+}
+
+#settings button{
+	grid-column: 2 / 4;
+}
+
+#settings p{
+	grid-column: 2 / 4;
+}

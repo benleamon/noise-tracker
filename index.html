@@ -5,11 +5,14 @@
     <meta charset="UTF-8" />
     <title>Hello, world!</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="main.css">
   </head>
   <body>
-    <h1>Decibel tracker</h1>
+    <h1>How loud are you?</h1>
 
-    <div id="settings">
+    <div id="settings" class="hidden">
+      <h2>Settings</h2>
+      <span>X</span>
       <label for="">Low until:</label>
       <input type="number" name="low" value="-30">
       
@@ -25,24 +28,29 @@
       <input type="number" name="minutes" value="">
       
       <label for="">Lives On</label>
-      <input type="checkbox" name="lives-toggle" checked = TRUE>
+      <input type="checkbox" name="lives-toggle" checked = FALSE>
       <label for="">Lives</label>
-      <input type="number" name="lives" value="5">
+      <input type="number" name="lives" id = "lives"placeholder="0">
+      <button id="export-button">Export</button>
+      <button id="data-reset-button">Reset All Data</button>
+      <p>These parameters are rough estimates based on my personal testing. Since every microphohne is different, you'll likely need to test out several different values for the noise levels until you find what works right.</p>
     </div>
-
-    <p>Current db:</p>
-    <p id="db-label">0</p>
-    <p>Average db:</p>
-    <p id="average-label">0</p>
-    
+    <div id = "dashboard">
+      <p>Current db:</p>
+      <p id="db-label">0</p>
+      <p>Average db:</p>
+      <p id="average-label">0</p>
+    </div>
     <img id="level-image" src="image/0.png">
     
-    <div id="lives"></div>
+    <div id="lives-container">
+      <button id="add-lives-button">+</button>
+    </div>
 
-    <button id="start-button">Start</button>
-    <button id="stop-button">Stop</button>
-    <button id="export-button">Export</button>
-    <button id="data-reset-button">Reset All Data</button>
+    <div id = "controls">
+      <button id="start-button">Start</button>
+      <button id="stop-button">Stop</button>
+    </div>
   </body>
   <script src="main.js"></script>
 </html>

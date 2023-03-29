@@ -6,7 +6,7 @@ const thresholds = {
   duration: 60,
   low: -30.0,
   medium: -18.0,
-  lives:5,
+  lives:0,
   minutes:0,
   update: function(threshold, value) {
     this[threshold] = parseInt(value, 10)
@@ -94,6 +94,9 @@ async function startAudioAnalysis() {
 
     // update the main picture based on sound levels
     setLevelImage(formattedDecibels, thresholds);
+
+    // Remove a life if it gets too loud
+    removeLives(formattedDecibels, thresholds)
   };
 
   // connect the audio source to the script processor and start the audio stream
@@ -157,17 +160,6 @@ function averageSound(duration){
   return average;
 }
 
-//Change level-image based on sound levels
-// function setLevelImage(sound){
-//   if (sound < thresholds.low){
-//     document.getElementById("level-image").src = "image/1.png"
-//   } else if ( sound > thresholds.low && sound < thresholds.medium) {
-//     document.getElementById("level-image").src = "image/2.png"
-//   } else if (sound > thresholds.medium) {
-//     document.getElementById("level-image").src = "image/3.png"
-//   }
-// }
-
 function setLevelImage(sound, thresholds){
   if (sound < thresholds.low){
     document.getElementById("level-image").src = "image/1.png"
@@ -177,6 +169,61 @@ function setLevelImage(sound, thresholds){
     document.getElementById("level-image").src = "image/3.png"
   }
 }
+
+//Remove All lives
+function deleteAllLives(){
+  const elements = document.querySelectorAll('.life');
+  elements.forEach((i) => {
+  i.remove();
+})
+}
+
+//Update number of lives on screen: 
+function drawLives(thresholds) {
+  console.log("Draw Lives")
+  deleteAllLives()
+  const div = document.getElementById("lives-container");
+  for (let i =1; i <= thresholds.lives; i++) {
+    const img = document.createElement("img");
+    img.src = "image/life.png";
+    img.className = "life"
+    div.appendChild(img);
+  }
+}
+
+//Remove Lives if it's too loud
+function removeLives (sound, levels) {
+  if (sound > levels.medium) {
+    console.log("life removed")
+    const oldLives = levels.lives;
+    let newLives = oldLives - 1
+    if (newLives < 0) {
+      newLives = 0;
+    }
+    thresholds.update("lives", newLives);
+    drawLives(thresholds);
+  }
+}
+
+// Draw initial lives
+drawLives(thresholds)
+
+//Event listener to update number of lives on screen when settings are chagned 
+const livesInput = document.getElementById("lives");
+livesInput.addEventListener("input", function(){
+  console.log("fired")
+  drawLives(thresholds)
+})
+
+//Add Lives button 
+document.getElementById("add-lives-button").addEventListener("click", function() {
+  console.log("life added")
+  const currentLives = thresholds.lives;
+  thresholds.update("lives", thresholds.lives += 1)
+  console.log("You now have: " + thresholds.lives)
+  drawLives(thresholds)
+});
+
 
 
 //Buttons
