@@ -6,13 +6,17 @@
     <title>Hello, world!</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="main.css">
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap" rel="stylesheet"> 
   </head>
   <body>
     <h1>How loud are you?</h1>
 
+    <button id="open-settings">?</button>
     <div id="settings" class="hidden">
       <h2>Settings</h2>
-      <span>X</span>
+      <button id="close-settings">X</button>
       <label for="">Low until:</label>
       <input type="number" name="low" value="-30">
       
@@ -22,32 +26,44 @@
       <label for="">Duration for Average</label>
       <input type="number" name="duration" value="60">
 
-      <label for="">Timer On</label>
+      <!-- <label for="">Timer On</label>
       <input type="checkbox" name="timer-toggle" checked = "TRUE">
       <label for="">Timer (minutes):</label>
-      <input type="number" name="minutes" value="">
+      <input type="number" name="minutes" value=""> -->
       
-      <label for="">Lives On</label>
-      <input type="checkbox" name="lives-toggle" checked = FALSE>
-      <label for="">Lives</label>
+      <!-- <label for="">Lives On</label>
+      <input type="checkbox" name="lives-toggle" checked = FALSE> -->
+      <label for="">Initial Lives:</label>
       <input type="number" name="lives" id = "lives"placeholder="0">
       <button id="export-button">Export</button>
       <button id="data-reset-button">Reset All Data</button>
-      <p>These parameters are rough estimates based on my personal testing. Since every microphohne is different, you'll likely need to test out several different values for the noise levels until you find what works right.</p>
+      <section id = "info">
+        <p>These parameters are rough estimates based on my personal testing. Since every microphohne is different, you'll likely need to test out several different values for the noise levels until you find what works right.</p>
+        <p>To get started, I'd recommend running the app and keeping an eye on the values. What are the numbers when things are good, what are they when they're ok, and what are they when they're just too loud? Remember, you can always change them!</p>
+        <p>This site doesn't collect any personal info, or save any recordings. If it's not working, please make sure you allowed it to access your microphone. Again, nothing is being recorded, so it's safe. If you'd like to verify yourself, see the code on github.</p>
+      </section>
     </div>
     <div id = "dashboard">
-      <p>Current db:</p>
-      <p id="db-label">0</p>
-      <p>Average db:</p>
-      <p id="average-label">0</p>
+      <div id="dashboard-current">
+        <p class = "measurement" id="db-label">0</p>
+        <p class = "label">Current dB</p>
+      </div>
+      <div id="dashboard-average">
+        <p class = "measurement" id="average-label">0</p>
+        <p class = "label">Average dB</p>
+      </div>
+      
     </div>
     <img id="level-image" src="image/0.png">
     
     <div id="lives-container">
-      <button id="add-lives-button">+</button>
+      <!-- <button id="add-lives-button">+</button>
+      <button id="minus-lives-button">-</button> -->
     </div>
 
     <div id = "controls">
+      <button id="add-lives-button">+</button>
+      <button id="minus-lives-button">-</button>
       <button id="start-button">Start</button>
       <button id="stop-button">Stop</button>
     </div>

@@ -111,7 +111,7 @@ function updateDb(rawdb){
 
 // Update the text showing the current average decibel level on the web page
 function updateAverageDb(average){
-  document.getElementById("average-label").innerHTML = average;
+  document.getElementById("average-label").innerHTML = average.toFixed(1);
 }
 
 // Save current decibel value to data
@@ -224,6 +224,19 @@ document.getElementById("add-lives-button").addEventListener("click", function()
   drawLives(thresholds)
 });
 
+//Remove lives button 
+document.getElementById("minus-lives-button").addEventListener("click", function(){
+  console.log("Life removed")
+  const currentLives = thresholds.lives;
+  if (currentLives > 0){
+    thresholds.update("lives", thresholds.lives -= 1)
+    console.log("You now have: " + thresholds.lives)
+    drawLives(thresholds)
+  } else {
+    console.log("No lives to take!")
+  }
+  
+});
 
 
 //Buttons
@@ -242,3 +255,11 @@ document.getElementById("stop-button").addEventListener("click", function() {
 document.getElementById("data-reset-button").addEventListener("click", function() {
   resetData();
 });
+
+//Settings Pannel conrols 
+document.getElementById("open-settings").addEventListener("click", function(){
+  document.getElementById("settings").classList.toggle("hidden")
+})
+document.getElementById("close-settings").addEventListener("click", function(){
+  document.getElementById("settings").classList.toggle("hidden")
+})
